@@ -1,0 +1,31 @@
+{
+  "name": "nbequizbot",
+  "version": "1.0.0",
+  "description": "Quiz bot for facebook messenger",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/igroomgrim/NBEQuizBot.git"
+  },
+  "keywords": [
+    "Quiz",
+    "bot",
+    "for",
+    "facebook",
+    "messenger"
+  ],
+  "author": "Anak Mirasing",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/igroomgrim/NBEQuizBot/issues"
+  },
+  "homepage": "https://github.com/igroomgrim/NBEQuizBot#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "request": "^2.79.0"
+  }
+}
