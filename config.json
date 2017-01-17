@@ -1,0 +1,5 @@
+{
+    "VERIFY_TOKEN": "nbe_quiz_bot",
+    "API_ENDPOINT": "https://graph.facebook.com/v2.6/me/messages",
+    "GRAPH_API_ENDPOINT": "https://graph.facebook.com/v2.7/"
+}
