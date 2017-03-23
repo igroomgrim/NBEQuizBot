@@ -1,5 +1,7 @@
 {
-    "VERIFY_TOKEN": "nbe_quiz_bot",
-    "API_ENDPOINT": "https://graph.facebook.com/v2.6/me/messages",
-    "GRAPH_API_ENDPOINT": "https://graph.facebook.com/v2.7/"
+    "FB_VERIFY_TOKEN": "nbe_quiz_bot",
+    "FB_API": "https://graph.facebook.com/v2.6/",
+    "FB_MESSENGER_API": "https://graph.facebook.com/v2.6/me/messages",
+    "FB_THREAD_API_ENDPOINT": "https://graph.facebook.com/v2.6/me/thread_settings",
+    "PORT": 5000
 }

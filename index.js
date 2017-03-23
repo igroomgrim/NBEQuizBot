@@ -1,71 +1,44 @@
 'use strict'
 
-const express = require('express');
-const bodyParser = require('body-parser');
-const app = express();
+const express = require('express')
+const bodyParser = require('body-parser')
+const config = require('./config')
+const app = express()
 
-var config = require('./config');
+const Bot = require('./bot')
+const bot = new Bot({
+  verifyToken: config.FB_VERIFY_TOKEN,
+  accessToken: process.env.FB_PAGE_ACCESS_TOKEN
+})
 
-app.set('port', (process.env.PORT || 5000));
+app.set('port', (process.env.PORT || config.PORT))
 
-// Process application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: false}))
 
-// Process application/json
-app.use(bodyParser.json());
+app.use(bodyParser.json())
 
-// Index route
-app.get('/', function (req, res) {
-    res.send('Hey! I am MR.Nbe :D')
-});
+app.use(bot.router())
 
-// Facebook verification
-app.get('/webhook/', function (req, res) {
-    if (req.query['hub.mode'] === 'subscribe' && req.query['hub.verify_token'] === config.VERIFY_TOKEN) {
-    	console.log("Token validation success.")
-        res.status(200).send(req.query['hub.challenge']);
-    } else {
-    	console.log("Token validation failed.")
-    	res.sendStatus(403);
-    }
-});
+bot.on('message', (senderID, message) => {
+  console.log(`fbbot message ${senderID} ${message}`)
+})
 
-// Listen for POST calls
-app.post('/webhook', function (req, res) {
-	var body = req.body;
+bot.on('postback', (senderID, payload) => {
+  console.log(`fbbot postback : ${senderID} ${payload}`)
+})
 
-	// Make sure this is a page subscription
-	if (body.object === 'page') {
-		body.entry.forEach(function(pageEntry) {
-      		var pageID = pageEntry.id;
-      		var timeOfEvent = pageEntry.time;
+bot.on('quick_reply', (senderID, payload) => {
+  console.log(`fbbot quick_reply : ${senderID} ${payload}`)
+})
 
-      		pageEntry.messaging.forEach(function(messagingEvent) {
-      			if (messagingEvent.optin) {
-        			console.log("messagingEvent : optin")
+bot.on('api_ai', (senderID, intent) => {
+  console.log(`data from api.ai : ${intent}`)
+})
 
-        		} else if (messagingEvent.message) {
-        			console.log("messagingEvent : message")
+bot.on('error', (error) => {
+  console.log('fbbot on error', error)
+})
 
-        		} else if (messagingEvent.delivery) {
-        			console.log("messagingEvent : delivery")
-
-        		} else if (messagingEvent.postback) {
-        			console.log("messagingEvent : postback")
-
-        		} else if (messagingEvent.read) {
-        			console.log("messagingEvent : read")
-        			
-        		} else {
-          			console.log("Webhook received unknown messagingEvent : ", messagingEvent)
-        		}
-      		});
-      	});
-
-      	res.sendStatus(200);
-	}
-});
-
-app.listen(app.get('port'), function() {
-    console.log('Running NBE bot on port', app.get('port'))
-});
+app.listen(app.get('port'), () => {
+  console.log(`Running Omise CoolGlasses bot on port : ${app.get('port')}`)
+})
