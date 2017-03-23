@@ -8,7 +8,8 @@ const app = express()
 const Bot = require('./bot')
 const bot = new Bot({
   verifyToken: config.FB_VERIFY_TOKEN,
-  accessToken: process.env.FB_PAGE_ACCESS_TOKEN
+  accessToken: process.env.FB_PAGE_ACCESS_TOKEN,
+  apiaiToken: process.env.API_AI_CLIENT_ACCESS_TOKEN
 })
 
 app.set('port', (process.env.PORT || config.PORT))
